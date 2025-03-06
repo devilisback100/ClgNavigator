@@ -18,7 +18,6 @@ const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 function App() {
   const [user, setUser] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 768);
-  const [showChatbot, setShowChatbot] = useState(window.innerWidth > 768); // Initially open on big screens
 
   // ✅ Load user from localStorage when App starts
   useEffect(() => {
@@ -26,6 +25,16 @@ function App() {
     if (storedUser) {
       setUser(storedUser);
     }
+
+    // ✅ Resize listener to handle screen size changes dynamically
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setSidebarOpen(true); // Always open on large screens
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   // ✅ Handle user login
@@ -40,22 +49,16 @@ function App() {
     setUser(null);
   };
 
-  // ✅ Toggle sidebar visibility
+  // ✅ Toggle chatbot visibility
   const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
-
-  // ✅ Toggle chatbot visibility (only for small screens)
-  const toggleChatbot = () => {
-    if (window.innerWidth <= 768) {
-      setShowChatbot(!showChatbot);
-    }
+    setSidebarOpen((prev) => !prev);
   };
 
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <Router>
         <div className="app-wrapper">
+          {/* Pass chatbot toggle to Navbar */}
           <Navbar
             user={user}
             handleLogout={handleLogout}
@@ -76,15 +79,15 @@ function App() {
               </Routes>
             </div>
 
-            {/* Chatbot Toggle Button (Only for small screens) */}
+            {/* ✅ Chatbot Toggle Button (only on small screens) */}
             {window.innerWidth <= 768 && (
-              <button className="chatbot-toggle" onClick={toggleChatbot}>
-                {showChatbot ? "Close Chatbot" : "Open Chatbot"}
+              <button className="chatbot-toggle" onClick={toggleSidebar}>
+                {sidebarOpen ? "Close Chatbot" : "Open Chatbot"}
               </button>
             )}
 
-            {/* Chatbot Sidebar (Always visible on big screens, toggle for small) */}
-            {showChatbot && (
+            {/* ✅ Chatbot Sidebar (Always open on large screens, toggle on mobile) */}
+            {sidebarOpen && (
               <div className="chatbot-sidebar">
                 <iframe
                   src="https://cmr-s-chatbot-4.onrender.com/"
