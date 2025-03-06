@@ -1,0 +1,75 @@
+/* Container Styling */
+.map-container {
+    text-align: center;
+    padding: 20px;
+    font-family: "Arial", sans-serif;
+}
+
+/* Title */
+.map-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Campus Selection Tabs */
+.campus-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.campus-tab {
+    background: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 16px;
+}
+
+.campus-tab:hover {
+    background: #0056b3;
+}
+
+.campus-tab.active {
+    background: #ff9800;
+    font-weight: bold;
+}
+
+/* 3D Immersive Tour Frame */
+.iframe-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .campus-tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .campus-tab {
+        width: 80%;
+        text-align: center;
+    }
+
+    .iframe-container iframe {
+        height: 500px;
+    }
+}
+
+@media (max-width: 480px) {
+    .iframe-container iframe {
+        height: 400px;
+    }
+}

@@ -1,0 +1,66 @@
+.admin-panel-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.add-college-form {
+    margin-bottom: 20px;
+}
+
+.add-college-form input {
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.add-college-form button {
+    padding: 10px 15px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.add-college-form button:hover {
+    background: #218838;
+}
+
+.college-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.college-card {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    text-align: center;
+}
+
+.delete-btn {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background: #c82333;
+}
+
+@media (max-width: 600px) {
+    .college-list {
+        flex-direction: column;
+        align-items: center;
+    }
+}

@@ -1,0 +1,36 @@
+.event-page-container {
+    text-align: center;
+    padding: 20px;
+}
+
+.search-bar {
+    width: 80%;
+    max-width: 400px;
+    padding: 10px;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.event-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.event-card {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 250px;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .event-list {
+        flex-direction: column;
+        align-items: center;
+    }
+}

@@ -1,0 +1,195 @@
+/* Modern Sky Blue Theme for College Form */
+
+:root {
+    --primary-color: #4a9dd8;
+    /* Sky blue primary color */
+    --primary-light: #d0e8f7;
+    --primary-dark: #2c7cb7;
+    --text-color: #333333;
+    --text-light: #5e5e5e;
+    --background-color: #ffffff;
+    --background-light: #f9fbfd;
+    --border-color: #e0e0e0;
+    --success-color: #4caf50;
+    --error-color: #f44336;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+    --transition: all 0.3s ease;
+}
+
+/* General page styling */
+body {
+    font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+    background-color: var(--background-light);
+    color: var(--text-color);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* College form container */
+.college-form {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.college-form h2 {
+    color: var(--primary-dark);
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 600;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--primary-light);
+}
+
+.college-form h3 {
+    color: var(--primary-color);
+    font-size: 20px;
+    margin: 25px 0 15px;
+    font-weight: 500;
+}
+
+/* Form layout */
+.college-form form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.college-form form>div {
+    margin-bottom: 15px;
+}
+
+/* Full-width sections */
+.college-form form h3,
+.college-form form>div:has(h3)+div,
+/* Branches section */
+.college-form form>div:has(button) {
+    /* Button section */
+    grid-column: 1 / -1;
+}
+
+/* Form controls */
+.college-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-light);
+}
+
+.college-form input[type="text"],
+.college-form input[type="url"],
+.college-form input[type="email"],
+.college-form input[type="tel"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    transition: var(--transition);
+    box-sizing: border-box;
+}
+
+.college-form input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.college-form input:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+}
+
+/* Checkbox styling */
+.college-form input[type="checkbox"] {
+    margin-right: 8px;
+    accent-color: var(--primary-color);
+}
+
+.college-form div:has(input[type="checkbox"]) label {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+/* Button styling */
+.college-form button {
+    grid-column: 1 / -1;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 20px;
+    width: 100%;
+}
+
+.college-form button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.college-form button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Loading and error messaging */
+.college-form .error {
+    color: var(--error-color);
+    font-weight: 500;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    background-color: rgba(244, 67, 54, 0.1);
+    grid-column: 1 / -1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .college-form {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .college-form form {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Success message animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.alert {
+    animation: fadeIn 0.3s ease;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+}

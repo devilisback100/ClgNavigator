@@ -1,0 +1,257 @@
+/* Updated Navbar CSS with improved UI */
+
+:root {
+    --primary-color: #4a9dd8;
+    /* Sky blue primary color */
+    --primary-light: #d0e8f7;
+    --primary-dark: #2c7cb7;
+    --accent-color: #3483c7;
+    --text-color: #333333;
+    --text-light: #5e5e5e;
+    --background-color: #ffffff;
+    --background-light: #f9fbfd;
+    --border-color: #e0e0e0;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+    --transition: all 0.3s ease;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    height: 70px;
+    background: linear-gradient(to right, var(--primary-dark), var(--primary-color));
+    color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    /* Highest z-index to ensure navbar stays on top */
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: linear-gradient(to right, #ffffff, #e0f0ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    position: relative;
+    padding-left: 30px;
+}
+
+.logo::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'%3E%3C/path%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 5px;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-radius: 20px;
+    transition: var(--transition);
+    position: relative;
+    font-size: 0.95rem;
+}
+
+.nav-links li a::after {
+    content: "";
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: width 0.3s ease;
+}
+
+.nav-links li a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-links li a:hover::after {
+    width: 60%;
+}
+
+.login-btn,
+.logout-btn {
+    background-color: white;
+    color: var(--primary-dark);
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-weight: 600;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    margin-left: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.login-btn:hover,
+.logout-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    background-color: #f5f5f5;
+}
+
+.logout-btn {
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+/* Responsive Design */
+@media (max-width: 1000px) {
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .nav-links li a {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 850px) {
+    .menu-toggle {
+        display: block;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.8rem;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .menu-toggle::after {
+        content: "☰";
+    }
+
+    .menu-toggle.open::after {
+        content: "×";
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        background: var(--primary-dark);
+        width: 100%;
+        padding: 10px 0;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        z-index: 999;
+        gap: 0;
+    }
+
+    .nav-links.open {
+        display: flex;
+        animation: slideDown 0.3s ease forwards;
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links li a {
+        display: block;
+        padding: 15px 25px;
+        border-radius: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-links li a::after {
+        display: none;
+    }
+
+    .login-btn,
+    .logout-btn {
+        margin: 15px 25px;
+        width: calc(100% - 50px);
+        text-align: center;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Add margin or padding between the login and chatbot buttons for clarity */
+.navbar-auth {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    /* Adjust the gap between Login and ChatBot */
+    padding-left: 10px;
+}
+
+/* Ensure buttons have consistent height and alignment */
+.login-btn,
+.logout-btn,
+.sidebar-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* Specific ChatBot Button Styling */
+.sidebar-toggle {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.sidebar-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}

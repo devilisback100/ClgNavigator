@@ -1,38 +1,61 @@
-.App {
-  text-align: center;
-}
+/* App.css */
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Main layout structure */
+.app-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 100vh;
 }
 
-.App-link {
-  color: #61dafb;
+.content-wrapper {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+/* Chatbot sidebar styling */
+.chatbot-sidebar {
+  width: 400px;
+  height: 100%;
+  border-left: 1px solid #e0e0e0;
+  background-color: #f9f9f9;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.chatbot-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Make sure the navbar has a toggle button */
+.sidebar-toggle {
+  margin-left: auto;
+  padding: 8px 12px;
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.sidebar-toggle:hover {
+  background-color: #f5f5f5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .content-wrapper {
+    flex-direction: column;
   }
-  to {
-    transform: rotate(360deg);
+
+  .chatbot-sidebar {
+    width: 100%;
+    height: 400px;
   }
 }
