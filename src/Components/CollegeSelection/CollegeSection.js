@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./CollegeSection.css";
 
 export function CollegeSelection() {
@@ -8,8 +8,23 @@ export function CollegeSelection() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedCollege, setSelectedCollege] = useState(null);
+    const [reviewRating, setReviewRating] = useState(5);
+    const [reviewMessage, setReviewMessage] = useState("");
+    const [reviewSubmitting, setReviewSubmitting] = useState(false);
+    const [reviewError, setReviewError] = useState(null);
+    const [reviewSuccess, setReviewSuccess] = useState(false);
+    const [user, setUser] = useState(null);
 
-    const apiUrl = process.env.REACT_APP_API_URL ;
+    const navigate = useNavigate();
+    const apiUrl = process.env.REACT_APP_API_URL;
+
+    // Get logged-in user from localStorage
+    useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem("user"));
+        if (storedUser) {
+            setUser(storedUser);
+        }
+    }, []);
 
     useEffect(() => {
         const fetchColleges = async () => {
@@ -59,6 +74,170 @@ export function CollegeSelection() {
     const handleMapClick = (e, college) => {
         e.stopPropagation();
         window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(college.name)}`, "_blank");
+    };
+
+    const redirectToLogin = () => {
+        navigate("/login", { state: { from: `/colleges`, message: "Please log in to submit a review" } });
+    };
+
+    const handleReviewSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!user) {
+            setReviewError("Please log in to submit a review");
+            return;
+        }
+
+        setReviewSubmitting(true);
+        setReviewError(null);
+        setReviewSuccess(false);
+
+        try {
+            const response = await fetch(`${apiUrl}/colleges/${encodeURIComponent(selectedCollege.name)}/rate`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user_email: user.email,
+                    rating: reviewRating,
+                    message: reviewMessage
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.error || "Failed to submit review");
+            }
+
+            // Success - refresh college data to show new review
+            setReviewSuccess(true);
+            setReviewMessage("");
+
+            // Refresh the college data to include the new review
+            const collegeResponse = await fetch(`${apiUrl}/colleges/${encodeURIComponent(selectedCollege.name)}`);
+            if (collegeResponse.ok) {
+                const collegeData = await collegeResponse.json();
+                setSelectedCollege(collegeData.data);
+            }
+
+        } catch (error) {
+            console.error("Error submitting review:", error);
+            setReviewError(error.message);
+        } finally {
+            setReviewSubmitting(false);
+        }
+    };
+
+    const renderStarRating = (rating) => {
+        const stars = [];
+        for (let i = 1; i <= 5; i++) {
+            stars.push(
+                <span
+                    key={i}
+                    className={`star ${i <= rating ? 'filled' : 'empty'}`}
+                    onClick={() => setReviewRating(i)}
+                >
+                    {i <= rating ? '★' : '☆'}
+                </span>
+            );
+        }
+        return stars;
+    };
+
+    const renderReviews = () => {
+        if (!selectedCollege.reviews || selectedCollege.reviews.length === 0) {
+            return (
+                <div className="no-reviews">
+                    <p>No reviews yet. Be the first to share your experience!</p>
+                </div>
+            );
+        }
+
+        return (
+            <div className="reviews-list">
+                {selectedCollege.reviews.map((review, index) => (
+                    <div key={index} className="review-item">
+                        <div className="review-header">
+                            <div className="review-stars">
+                                {Array(5).fill().map((_, i) => (
+                                    <span key={i} className={`star ${i < review.rating ? 'filled' : 'empty'}`}>
+                                        {i < review.rating ? '★' : '☆'}
+                                    </span>
+                                ))}
+                            </div>
+                            <div className="review-author">
+                                {review.user_email && review.user_email.split('@')[0]}
+                            </div>
+                            <div className="review-date">
+                                {new Date(review.timestamp).toLocaleDateString()}
+                            </div>
+                        </div>
+                        <div className="review-message">{review.message}</div>
+                    </div>
+                ))}
+            </div>
+        );
+    };
+
+    const renderReviewForm = () => {
+        if (!user) {
+            return (
+                <div className="login-prompt">
+                    <p>You need to log in to submit a review.</p>
+                    <button
+                        className="btn btn-primary"
+                        onClick={redirectToLogin}
+                    >
+                        Log In
+                    </button>
+                </div>
+            );
+        }
+
+        return (
+            <form onSubmit={handleReviewSubmit} className="review-form">
+                <div className="form-group">
+                    <label>Your Rating:</label>
+                    <div className="rating-selector">
+                        {renderStarRating(reviewRating)}
+                    </div>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="reviewMessage">Your Review:</label>
+                    <textarea
+                        id="reviewMessage"
+                        value={reviewMessage}
+                        onChange={(e) => setReviewMessage(e.target.value)}
+                        placeholder="Share your experience with this college..."
+                        rows="4"
+                        required
+                    ></textarea>
+                </div>
+
+                {reviewError && (
+                    <div className="review-error">
+                        <p>{reviewError}</p>
+                    </div>
+                )}
+
+                {reviewSuccess && (
+                    <div className="review-success">
+                        <p>Review submitted successfully!</p>
+                    </div>
+                )}
+
+                <button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={reviewSubmitting}
+                >
+                    {reviewSubmitting ? "Submitting..." : "Submit Review"}
+                </button>
+            </form>
+        );
     };
 
     return (
@@ -156,6 +335,20 @@ export function CollegeSelection() {
                             <button className="btn btn-primary" onClick={(e) => handleMapClick(e, selectedCollege)}>
                                 <span className="icon">🗺️</span> View Campus Map
                             </button>
+                        </div>
+
+                        {/* Reviews Section */}
+                        <div className="college-reviews">
+                            <h3>Student Reviews</h3>
+
+                            {/* Display existing reviews */}
+                            {renderReviews()}
+
+                            {/* Add Review Form */}
+                            <div className="add-review-section">
+                                <h4>Share Your Experience</h4>
+                                {renderReviewForm()}
+                            </div>
                         </div>
                     </div>
                 ) : (
