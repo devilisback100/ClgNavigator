@@ -1,0 +1,104 @@
+/* Container for login component */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    background-image: url("https://wallpaperboat.com/wp-content/uploads/2019/10/best-background-for-website-14.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Login form container */
+.login-form-container {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    backdrop-filter: blur(10px);
+}
+
+/* Toggle buttons */
+.login-form-toggle {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+
+.login-form-toggle button {
+    width: 50%;
+    padding: 10px;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    color: #00ced1;
+}
+
+.login-form-toggle .active {
+    background-color: #033452;
+    color: white;
+}
+
+/* Form styling */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    color: #ffffff;
+    text-align: center;
+}
+
+.login-form h2 {
+    margin-bottom: 20px;
+}
+
+/* Input fields */
+.login-input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    background-color: white;
+    border-radius: 40px;
+    padding: 5px 10px;
+}
+
+.login-input-group .login-icon {
+    margin-right: 10px;
+    color: #033452;
+}
+
+.login-input-group input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+}
+
+/* Forgot password link */
+.login-forgot {
+    color: #007bff;
+    text-decoration: none;
+    margin-bottom: 10px;
+    display: block;
+    text-align: right;
+}
+
+/* Buttons */
+.login-form button {
+    padding: 10px;
+    background-color: #033452;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-form p {
+    text-align: center;
+}
